@@ -1,0 +1,14 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+**/__pycache__/
+
+# Environments
+.env
+
+# Static files
+**/*.jpg
+**/*.jpeg
+**/*.png
+
+# models
+**/*.h5

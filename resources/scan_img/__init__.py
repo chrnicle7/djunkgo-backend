@@ -1,0 +1,1 @@
+from .scan_img_page import ScanImageResource
