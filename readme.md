@@ -34,8 +34,10 @@ Content-Type: application-json
 ```
 Kemudian lampirkan token pada Authorization header > bearer token.
 Kalau token expired, login lagi.
+
+
 ## Mendeteksi image (login dulu)
-###  http://127.0.0.1:5000/scan-img
+###  http://127.0.0.1:5000/scan-img POST
 #### Header
 ```
 Content-Type: application-json
@@ -51,5 +53,21 @@ Content-Type: application-json
 {
     "result": "Kertas",
     "probability": "0.95"
+}
+```
+
+## Dashboard (login dulu)
+###  http://127.0.0.1:5000/scan-img GET
+#### Header
+```
+Content-Type: application-json
+```
+#### Response
+```
+{
+    "total_item": 8,
+    "organik": 6,
+    "anorganik": 2,
+    "terjual": 0
 }
 ```

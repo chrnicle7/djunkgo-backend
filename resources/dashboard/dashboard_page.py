@@ -21,10 +21,15 @@ class DashboardResource(Resource):
         q_anorganik = UserToItem.query.filter_by(user_id=user_now["id"]). \
                 join(Item).filter_by(is_anorganik=True). \
                 count()
-        q_false = UserToItem.query.filter_by(user_id=user_now["id"]). \
+        q_organik = UserToItem.query.filter_by(user_id=user_now["id"]). \
                 join(Item).filter_by(is_anorganik=False). \
                 count()
         q_terjual = UserToItem.query.filter(UserToItem.user_id==user_now["id"], UserToItem.is_terjual==True). \
                 count()
         
-        return {"anorganik": q_terjual}
+        return {
+            "total_item": q_all,
+            "organik": q_organik,
+            "anorganik": q_anorganik,
+            "terjual": q_terjual
+        }
