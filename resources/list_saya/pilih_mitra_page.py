@@ -159,7 +159,8 @@ class KonfirmasiResource(Resource):
                 new_transaksi_to_item.save_to_db()
 
             try:
-                ListToItem.query.filter_by(list_id=list_found.id).delete()
+                list_to_items = ListToItem.query.filter_by(list_id=list_found.id).delete()
+                db.session.commit()
             except Exception as e:
                 return {"message": "terdapat kesalahan"}, 201
     

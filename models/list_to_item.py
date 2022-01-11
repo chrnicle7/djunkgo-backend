@@ -13,3 +13,15 @@ class ListToItem(db.Model):
     def __init__(self, list_id, user_to_item_id):
         self.list_id = list_id
         self.user_to_item_id = user_to_item_id
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()

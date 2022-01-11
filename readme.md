@@ -53,10 +53,13 @@ Content-Type: application/json
 ```
 #### Response
 ```
-{
-    "result": "Kertas",
-    "probability": "0.95"
-}
+"data": {
+        "is_dapat_dijual": true,
+        "is_anorganik": false,
+        "result": "Kertas",
+        "probability": "0.42",
+        "message": "Item ini tidak bisa dijual"
+    }
 ```
 
 ## Dashboard
@@ -122,8 +125,13 @@ Content-Type: application/json
 ```
 
 ###  http://127.0.0.1:5000/list-saya/{id} POST
+
+### Untuk menambahkan/mengurangi jumlah item
 id adalah id milik item, berupa int
 untuk mengganti jumlah item
+
+jumlah: 10 berarti jumlahnya diganti menjadi 10
+misal awal 100, kemudian pada request 10, berarti hasil akhirnya 10
 #### Header
 ```
 Content-Type: application/json
@@ -138,6 +146,14 @@ Content-Type: application/json
 ```
 message : {
     "Item berhasil disimpan"
+}
+```
+###  http://127.0.0.1:5000/list-saya/{id} DELETE
+### Untuk menghapus 
+#### Response
+```
+message : {
+    "Item berhasil dihapus"
 }
 ```
 

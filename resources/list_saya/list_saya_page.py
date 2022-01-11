@@ -9,7 +9,9 @@ from main import db
 from config import APP_URL, APP_PORT
 
 from helper import GetCurrentUser
-from models import UserToItem, Item
+from models import List, UserToItem, Item
+from models.list_to_item import ListToItem
+from models.user import User
 
 """
     Parser 
@@ -26,18 +28,20 @@ class ListSayaResource(Resource):
 
     def get(self):
         user_now =  GetCurrentUser().get_current_user()
-        q_all = UserToItem.query.filter_by(user_id=user_now["id"]).all()
+        q_list = List.query.filter_by(user_id=user_now["id"]).first()
+        q_all = q_list.list_to_items
         results = []
        
         if len(q_all) > 0:
             for q in q_all:
-                item_found = Item.query.filter_by(id=q.item_id).first()
+                user_to_item_found = UserToItem.find_by_id(q.user_to_items_id)
+                item_found = Item.find_by_id(user_to_item_found.item_id)
 
                 if item_found is not None:
                     result = {
                         "id": q.id,
                         "nama_item": item_found.nama,
-                        "jumlah": str(q.jumlah) + " pcs",
+                        "jumlah": str(user_to_item_found.jumlah) + " pcs",
                         "jenis": "anorganik" if item_found.is_anorganik else "organik",
                         "url_delete": request.base_url + "/" + str(q.id)
                     }
@@ -51,7 +55,8 @@ class ListSayaDetailResource(Resource):
 
     def get(self, id):
         try:
-            q = UserToItem.find_by_id(id)
+            list_to_item_found = ListToItem.find_by_id(id)
+            q = UserToItem.find_by_id(list_to_item_found.user_to_items_id)
             item = Item.query.filter_by(id=q.item_id).first()
         except Exception as e:
             return {
@@ -74,7 +79,8 @@ class ListSayaDetailResource(Resource):
         
     def post(self, id):
         try:
-            q = UserToItem.find_by_id(id)
+            list_to_item_found = ListToItem.find_by_id(id)
+            q = UserToItem.find_by_id(list_to_item_found.user_to_items_id)
         except Exception as e:
             return {
                 "message": "Item tidak ditemukan"
@@ -94,4 +100,25 @@ class ListSayaDetailResource(Resource):
 
         return {
                 "message": "Item berhasil disimpan"
+            }, 200
+
+    def delete(self, id):
+        try:
+            list_to_item_found = ListToItem.find_by_id(id)
+            q = UserToItem.find_by_id(list_to_item_found.user_to_items_id)
+        except Exception as e:
+            return {
+                "message": "Item tidak ditemukan"
+            }, 404
+
+        try:
+            ListToItem.query.filter_by(id=id).delete()
+            db.session.commit()
+        except Exception as e:
+            return {
+                "message": "Terjadi kesalahan"
+            }, 500
+
+        return {
+                "message": "Item berhasil dihapus"
             }, 200
