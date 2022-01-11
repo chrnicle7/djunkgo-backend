@@ -1,3 +1,6 @@
+## About
+Merupakan rest api sederhana untuk aplikasi pendeteksi dan penjualan waste. Untuk pendeteksinya menggunakan pre-trained model.
+
 ## Installation
 
 ```
@@ -14,7 +17,7 @@ python main.py
 
 Gunakan postman/sejenisnya untuk mencoba
 ## Login
-###  http://127.0.0.1:5000/auth/login (post)
+###  http://127.0.0.1:5000/auth/login POST
 #### Header
 ```
 Content-Type: application-json
@@ -36,7 +39,7 @@ Kemudian lampirkan token pada Authorization header > bearer token.
 Kalau token expired, login lagi.
 
 
-## Mendeteksi image (login dulu)
+## Mendeteksi image
 ###  http://127.0.0.1:5000/scan-img POST
 #### Header
 ```
@@ -56,7 +59,7 @@ Content-Type: application/json
 }
 ```
 
-## Dashboard (login dulu)
+## Dashboard
 ###  http://127.0.0.1:5000/scan-img GET
 #### Header
 ```
@@ -72,7 +75,7 @@ Content-Type: application/json
 }
 ```
 
-## List saya (login dulu)
+## List saya
 ###  http://127.0.0.1:5000/list-saya GET
 #### Header
 ```
@@ -119,6 +122,7 @@ Content-Type: application/json
 ```
 
 ###  http://127.0.0.1:5000/list-saya/{id} POST
+id adalah id milik item, berupa int
 untuk mengganti jumlah item
 #### Header
 ```
@@ -152,7 +156,7 @@ Content-Type: application/json
             "nama": "D",
             "alamat": "9210 Welch Bridge\nLake Mavis, ND 21670-9743",
             "rating": "5.0",
-            "path_foto": null
+            "path_foto": "path/to/foto"
         }
         ...
     ]
@@ -161,6 +165,10 @@ Content-Type: application/json
 
 Pada saat mengisikan query search
 ###  http://127.0.0.1:5000/pilih-mitra?search=namamitra GET
+#### Header
+```
+Content-Type: application/json
+```
 #### Response
 ```
 {
@@ -179,7 +187,13 @@ Pada saat mengisikan query search
 
 Pada saat melihat detail mitra, 
 akan memberikan estimasi harga
-###  http://127.0.0.1:5000/pilih-mitra/{id} GET
+###  http://127.0.0.1:5000/pilih-mitra/{id} POST
+id yaitu milik mitra
+id berupa integer
+#### Header
+```
+Content-Type: application/json
+```
 #### Response
 ```
 {
@@ -195,13 +209,13 @@ akan memberikan estimasi harga
                 "nama": "Botol kaca",
                 "harga_x_quantity": "Rp. 1000 x 40 pcs",
                 "harga_per_item": 40000,
-                "path_foto_item": "http://localhost:5000/static/uploads/Botol_Kaca_Coca_Cola_Sprite_Fanta.jpg"
+                "path_foto_item": "path/to/photo"
             },
             {
                 "nama": "Kertas",
                 "harga_x_quantity": "Rp. 2000 x 40 pcs",
                 "harga_per_item": 80000,
-                "path_foto_item": "http://localhost:5000/static/uploads/Timbunan_Sampah_Kertas.jpg"
+                "path_foto_item": "path/to/photo"
             }
         ],
         "total_harga": 120000,
@@ -214,6 +228,16 @@ akan memberikan estimasi harga
 ### Mengkonfirmasi list dan masuk ke transaksi
 list akan dikosongkan
 ###  http://127.0.0.1:5000/konfirmasi-list GET
+#### Header
+```
+Content-Type: application/json
+```
+### Body
+```
+{
+    "mitra_id": <int>
+}
+```
 #### Response
 ```
 {
@@ -229,18 +253,82 @@ list akan dikosongkan
                 "nama": "Botol kaca",
                 "harga_x_quantity": "Rp. 1000 x 40 pcs",
                 "harga_per_item": 40000,
-                "path_foto_item": "http://localhost:5000/static/uploads/Botol_Kaca_Coca_Cola_Sprite_Fanta.jpg"
+                "path_foto_item": "path/to/photo"
             },
             {
                 "nama": "Kertas",
                 "harga_x_quantity": "Rp. 2000 x 40 pcs",
                 "harga_per_item": 80000,
-                "path_foto_item": "http://localhost:5000/static/uploads/Timbunan_Sampah_Kertas.jpg"
+                "path_foto_item": "path/to/photo"
             }
         ],
         "total_harga": 120000,
         "list_id": "UBFUI5qWAJH9aCiYOONsfH0cJcjn9I4X",
         "mitra_id": 5
+    }
+}
+```
+
+### Daftar Transaksi
+###  http://127.0.0.1:5000/transaksi?status={status_id} GET
+status_id boleh diisi boleh tidak
+Keterangan status
+1	"Mengunggu konfirmasi"
+2	"Terkonfirmasi"
+3	"Dijemput kurir"
+4	"Transaksi selesai" 
+#### Header
+```
+Content-Type: application/json
+```
+#### Response
+```
+{
+    "data": [
+        {
+            "nama_mitra": "D",
+            "path_foto_mitra": "path/to/photo",
+            "total_harga_transaksi": 29500,
+            "status_transaksi": "Mengunggu konfirmasi",
+            "transaksi_url": "http://127.0.0.1:5000/transaksi/{id}"
+        }
+        ...
+    ]
+}
+```
+
+### Detail transaksi
+###  http://127.0.0.1:5000/transaksi/{id} GET
+id berupa string
+#### Header
+```
+Content-Type: application/json
+```
+#### Response
+```
+{
+    "data": {
+        "mitra": {
+            "nama_mitra": "D",
+            "alamat_mitra": "2774 Kshlerin Field Suite 608\nEllisbury, RI 06678-2293",
+            "rating_mitra": "5.0",
+            "path_foto_mitra": "path/to/photo"
+        },
+        "items": [
+            {
+                "nama_item": "Botol kaca",
+                "harga_x_quantity": "Rp. 500 19 pcs",
+                "harga_per_item": 9500,
+                "path_foto": "http://localhost:5000/path"
+            },
+            {
+                "nama_item": "Plastik",
+                "harga_x_quantity": "Rp. 2000 10 pcs",
+                "harga_per_item": 20000,
+                "path_foto": "http://localhost:5000/path"
+            }
+        ],
+        "status": "Mengunggu konfirmasi"
     }
 }
 ```
