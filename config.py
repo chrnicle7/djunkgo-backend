@@ -19,3 +19,6 @@ DB_URL_DEV = "postgresql://%(user)s:%(password)s@%(host)s:%(port)s/%(db)s" % POS
 """
 JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 UPLOAD_FOLDER = config('UPLOAD_FOLDER')
+
+APP_URL = config('APP_URL')
+APP_PORT = config('APP_PORT')

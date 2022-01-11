@@ -12,3 +12,16 @@ class Item(db.Model):
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     user_to_items = db.relationship("UserToItem", backref="user_to_items_item", lazy=True)
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+        
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()
+

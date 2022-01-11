@@ -29,5 +29,9 @@ for blueprint in vars(routes).values():
     if isinstance(blueprint, Blueprint):
         app.register_blueprint(blueprint)
 
+@app.route("/test")
+def test():
+    return {"message": "bismillah"}
+
 if __name__ == "__main__":
     app.run()

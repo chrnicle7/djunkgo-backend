@@ -1,11 +1,8 @@
 from main import db
 from datetime import datetime
-from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
-
-class MitraToItem(Base):
-    __tablename__ = "mitra_to_item"
+class MitraToItem(db.Model):
+    __tablename__ = "mitra_to_items"
 
     id = db.Column(db.Integer, primary_key=True)
     mitra_id = db.Column(db.ForeignKey('mitras.id'), primary_key=True)

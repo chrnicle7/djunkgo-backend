@@ -18,7 +18,7 @@ class UserToItem(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow)
 
-    list_to_items = db.relationship("ListToItem", backref="list_to_items", lazy=True)
+    list_to_items = db.relationship("ListToItem", backref="list_to_items_user", lazy=True)
     transaksi_to_items = db.relationship("TransaksiToItem", backref="transaksi_to_items", lazy=True)
 
     def json(self):
@@ -31,3 +31,16 @@ class UserToItem(db.Model):
         self.path_foto = path_foto
         self.filename = filename
         self.mimetype = mimetype
+
+
+    @classmethod
+    def find_by_id(cls, id):
+        return cls.query.filter_by(id=id).first()
+
+    def save_to_db(self):
+        db.session.add(self)
+        db.session.commit()
+
+    def delete_from_db(self):
+        db.session.delete(self)
+        db.session.commit()

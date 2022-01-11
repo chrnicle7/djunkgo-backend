@@ -1,0 +1,2 @@
+from .list_saya_page import ListSayaResource, ListSayaDetailResource
+from .pilih_mitra_page import PilihMitraResource, DetailMitraResource, KonfirmasiResource

@@ -60,10 +60,10 @@ class ScanImageResource(Resource):
             db.session.add(new_pic)
             db.session.commit()
 
-            return {
+            return {"data": {
                 "result": model_ml.result,
                 "probability": str(round(model_ml.probabilty.item(), 2))
-            }
+            }}, 200
         else:
             return {"message" : "Ekstensi foto yang diperbolehkan hanya png, jpg, jpeg, gif"}, 400
 
