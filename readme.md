@@ -348,3 +348,38 @@ Content-Type: application/json
     }
 }
 ```
+
+### Item saya
+###  http://127.0.0.1:5000/transaksi/{id} GET
+id berupa string
+#### Header
+```
+Content-Type: application/json
+```
+#### Response
+```
+{
+    "data": {
+        "mitra": {
+            "nama_mitra": "D",
+            "alamat_mitra": "2774 Kshlerin Field Suite 608\nEllisbury, RI 06678-2293",
+            "rating_mitra": "5.0",
+            "path_foto_mitra": "path/to/photo"
+        },
+        "items": [
+            {
+                "nama_item": "Botol kaca",
+                "harga_x_quantity": "Rp. 500 19 pcs",
+                "harga_per_item": 9500,
+                "path_foto": "http://localhost:5000/path"
+            },
+            {
+                "nama_item": "Plastik",
+                "harga_x_quantity": "Rp. 2000 10 pcs",
+                "harga_per_item": 20000,
+                "path_foto": "http://localhost:5000/path"
+            }
+        ],
+        "status": "Mengunggu konfirmasi"
+    }
+}

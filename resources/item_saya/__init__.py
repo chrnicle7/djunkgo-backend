@@ -1,0 +1,1 @@
+from .item_saya_page import ItemSayaResource, ItemSayaDetailResource
