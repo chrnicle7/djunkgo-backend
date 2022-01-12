@@ -53,13 +53,15 @@ Content-Type: application/json
 ```
 #### Response
 ```
-"data": {
+{
+    "data": {
         "is_dapat_dijual": true,
         "is_anorganik": false,
         "result": "Kertas",
         "probability": "0.42",
         "message": "Item ini tidak bisa dijual"
     }
+}
 ```
 
 ## Dashboard
@@ -383,3 +385,71 @@ Content-Type: application/json
         "status": "Mengunggu konfirmasi"
     }
 }
+```
+
+### Daftar mitra
+###  http://127.0.0.1:5000/daftar-mitra?search=<nama_mitra> GET
+<nama_mitra> boleh kosong
+#### Header
+```
+Content-Type: application/json
+```
+#### Response
+```
+{
+    "data": [
+        {
+            "id_mitra": 4,
+            "nama_mitra": "D",
+            "alamat_mitra": "2774 Kshlerin Field Suite 608\nEllisbury, RI 06678-2293",
+            "rating_mitra": "5.0",
+            "path_foto_mitra": null,
+            "url_mitra": "http://127.0.0.1:5000/daftar-mitra/4"
+        }
+        ...
+    ]
+}
+```
+
+### Detail mitra
+###  http://127.0.0.1:5000/daftar-mitra/{id}
+id adalah id mitra berupa int
+#### Header
+```
+Content-Type: application/json
+```
+#### Response
+```
+{
+    "data": {
+        "mitra": {
+            "nama_mitra": "D",
+            "alamat_mitra": "2774 Kshlerin Field Suite 608\nEllisbury, RI 06678-2293",
+            "rating_mitra": "5.0",
+            "path_foto_mitra": null
+        },
+        "items": [
+            {
+                "nama": "Plastik",
+                "harga_satuan": "Rp.2000/pcs"
+            },
+            {
+                "nama": "Botol kaca",
+                "harga_satuan": "Rp.500/pcs"
+            },
+            {
+                "nama": "Kertas",
+                "harga_satuan": "Rp.500/pcs"
+            },
+            {
+                "nama": "Plastik",
+                "harga_satuan": "Rp.2000/pcs"
+            },
+            {
+                "nama": "Kardus",
+                "harga_satuan": "Rp.500/pcs"
+            }
+        ]
+    }
+}
+```

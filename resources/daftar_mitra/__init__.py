@@ -1,0 +1,1 @@
+from .daftar_mitra_page import DaftarMitraResource, DetailMitraResource
