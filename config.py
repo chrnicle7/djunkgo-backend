@@ -21,4 +21,5 @@ JWT_SECRET_KEY = config('JWT_SECRET_KEY')
 UPLOAD_FOLDER = config('UPLOAD_FOLDER')
 
 APP_URL = config('APP_URL')
+APP_HOST = config('APP_HOST')
 APP_PORT = config('APP_PORT')

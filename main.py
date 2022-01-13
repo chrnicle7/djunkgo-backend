@@ -30,4 +30,4 @@ for blueprint in vars(routes).values():
         app.register_blueprint(blueprint)
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host=app_cfg.APP_HOST, port=app_cfg.APP_PORT)
