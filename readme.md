@@ -5,7 +5,7 @@ Merupakan rest api sederhana untuk aplikasi pendeteksi dan penjualan waste. Untu
 
 ```
 git init
-git clone git@github.com:naomihc/projekakhir-backend.git
+git clone git@github.com:chrnicle7/projekakhir-backend.git
 cd projekakhir-backend
 ```
 - Kemudian copy model junk91.h5 ke folder cv_model
